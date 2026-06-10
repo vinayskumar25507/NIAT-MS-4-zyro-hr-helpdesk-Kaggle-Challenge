@@ -91,11 +91,11 @@ Answer internal employee questions using ONLY the verified context fragments pro
 1. Rely strictly on facts directly mentioned. Do not extrapolate.
 2. If the answer cannot be cleanly derived, respond EXACTLY with: "I don't have that information in the documentation."
 3. NO PREAMBLE: Deliver dense, factual policy answers directly. Do not include conversational introductory prefixes."""),
-    ("human", "Context:
+    ("human", """Context:
 {context}
 
 Question: {question}
-Answer:")
+Answer:""")
 ])
 
 def format_docs_and_sanitize(docs):
