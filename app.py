@@ -88,21 +88,15 @@ REFUSAL_MESSAGE = "I can only answer HR-related questions from Zyro Dynamics pol
 # TODO: Create prompt template
 RAG_PROMPT = ChatPromptTemplate.from_messages([
     ("system", """You are the official Zyro Dynamics HR Verification Engine.
-Your sole duty is to answer internal employee questions using ONLY the verified context fragments provided below.
+Answer internal employee questions using ONLY the verified context fragments provided below.
+1. Rely strictly on facts directly mentioned. Do not extrapolate.
+2. If the answer cannot be cleanly derived, respond EXACTLY with: "I don't have that information in the documentation."
+3. NO PREAMBLE: Deliver dense, factual policy answers directly. Do not include conversational introductory prefixes."""),
+    ("human", """Context:
+{context}
 
-CRITICAL ANSWER FORMATTING RULES:
-1. Rely strictly on facts directly mentioned in the context. Do not assume or extrapolate.
-2. If the answer cannot be cleanly derived from the context, respond EXACTLY with: "I don't have that information in the documentation."
-3. ULTRA-SHORT EXTRACTION STYLE: Do NOT write a full conversational sentence. Do NOT repeat, echo, or rephrase the user's question in your response. Provide ONLY the exact value, phrase, or clause that answers the question directly.
-
-Examples of correct behavior:
-- USER QUESTION: What is the annual entitlement for Earned Leave?
-  - WRONG ANSWER: The annual entitlement for Earned Leave is 22 days.
-  - CORRECT ANSWER: 22 days
-- USER QUESTION: Who should an employee contact to report a data breach?
-  - WRONG ANSWER: Employees should contact the IT Security Head at security@zyrodynamics.com.
-  - CORRECT ANSWER: IT Security Head (security@zyrodynamics.com)"""),
-    ("human", "Context:\n{context}\n\nQuestion: {question}\nAnswer:")
+Question: {question}
+Answer:""")
 ])
 
 def format_docs_and_sanitize(docs):
